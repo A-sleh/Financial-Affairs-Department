@@ -1,0 +1,20 @@
+
+
+@import "tailwindcss";
+@font-face {
+    font-family: Arabic;
+    src: url('./fonts/Noto_Kufi_Arabic/NotoKufiArabic-VariableFont_wght.ttf') ;
+    font-weight: 100 800;
+    font-display: swap;
+}
+
+@theme {
+    
+    /* Global color  */
+    --color-primary: #428177;
+    --color-secondary: #988561;
+    --color-primary-dark: #161616;
+
+    /* Global fonts  */
+    --font-arabic: Arabic;
+}
