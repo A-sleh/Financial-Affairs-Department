@@ -25,10 +25,6 @@ export const router: RouteObject[] = [
         element: <Billing />
       },
       {
-        path: 'setting',
-        element: <Setting />
-      },
-      {
         path: 'users',
         element: <Users />
       },
@@ -41,7 +37,7 @@ export const router: RouteObject[] = [
         element: <UserDetails />
       },
       {
-        path: 'breaker panels',
+        path: 'breaker-panels',
         element: <BreakerPanels />
       }
     ]

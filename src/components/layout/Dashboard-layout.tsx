@@ -1,10 +1,10 @@
 import { Outlet } from "react-router";
 import { Navbar } from "../common/Navbar";
-import { Sidebar } from "../common/Sidebar";
+import { Sidebar } from "../common/Sidebar/Sidebar";
 
 export const DashboardLayout = () => {
   return (
-    <section className="flex">
+    <section className="flex" dir="rtl">
       <aside>
         <Sidebar />
       </aside>
