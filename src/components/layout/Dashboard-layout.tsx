@@ -4,18 +4,17 @@ import { Sidebar } from "../common/Sidebar/Sidebar";
 
 export const DashboardLayout = () => {
   return (
-    <section className="flex" dir="rtl">
-      <aside className="m-[1vh]">
+    <section className="flex font-arabic" dir="rtl">
+      <aside className="m-[1vh] ml-0">
         <Sidebar />
       </aside>
-      <section className="m-[1vh]">
+      <section className="m-[1vh] mr-0 w-full">
         <nav>
           <Navbar />
         </nav>
         <main>
-            <h1>main</h1>
+          <h1>main</h1>
           <Outlet />
-
         </main>
       </section>
     </section>

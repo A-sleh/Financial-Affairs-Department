@@ -1,3 +1,23 @@
+import { useState } from "react";
+import { Search } from "../inputs/Search";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { MdAddCard } from "react-icons/md";
+
 export const Navbar = () => {
-    return <h1>Nav bar</h1>
-}
+  const [value, setValue] = useState("");
+  return (
+    <div className="flex justify-between items-center p-2 w-full shadow-md">
+      <Search setValue={setValue} value={value} placeholder="البحث عن زبون" />
+      <div className="flex gap-2 items-center">
+        <button className="flex gap-2 items-center border-2 border-primary bg-primary text-white hover:bg-transparent hover:text-primary transition-all px-2 py-1 rounded-sm cursor-pointer">
+          <AiOutlineUserAdd size={22} />
+          <p className="hidden lg:block"> إضافة فاتورة</p>
+        </button>
+        <button className="flex gap-2 items-center border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all px-2 py-1 rounded-sm cursor-pointer">
+          <MdAddCard size={22} />
+          <p className="hidden lg:block"> إضافة زبون</p>
+        </button>
+      </div>
+    </div>
+  );
+};
