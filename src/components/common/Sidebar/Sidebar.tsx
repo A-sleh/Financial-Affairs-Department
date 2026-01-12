@@ -9,18 +9,17 @@ export const Sidebar = () => {
 
   return (
     <div
-      className={`spacey-y-4 bg-primary-dark min-h-dvh text-white p-4 relative transition-all duration-300
+      className={`spacey-y-4 bg-primary-dark min-h-[98dvh] text-white p-4 rounded-md overflow-hidden relative transition-all duration-300
          ${isOpen ? "w-56" : "w-20"}
         `}
       dir="rtl"
     >
       {/* Logo  */}
-
       <h1 className="text-3xl text-center mb-4 transition-all duration-300">
         {isOpen ? (
-          <>
-            <b>FINE</b>bank. <b>IO</b>
-          </>
+          <span>
+            <b>FINE</b>bank.<b>IO</b>
+          </span>
         ) : (
           "F.B"
         )}

@@ -5,10 +5,10 @@ import { Sidebar } from "../common/Sidebar/Sidebar";
 export const DashboardLayout = () => {
   return (
     <section className="flex" dir="rtl">
-      <aside>
+      <aside className="m-[1vh]">
         <Sidebar />
       </aside>
-      <section>
+      <section className="m-[1vh]">
         <nav>
           <Navbar />
         </nav>
