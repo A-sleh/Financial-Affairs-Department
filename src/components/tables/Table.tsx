@@ -1,64 +1,136 @@
 // @ts-nocheck
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, createContext, useContext } from "react";
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination,
 } from "react-table";
-
+import { Search as SearchInput } from "@/components/inputs/Search";
 import { LuChevronsUpDown } from "react-icons/lu";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { IoFilter } from "react-icons/io5";
 
-interface ITableProps {
-  columns: any[];
-  data: any[];
-  intialTotalRows: 5 | 10 | 16;
-  filterFn?: () => boolean;
-  searchKey?: string;
-}
+/**
+ * This context to share the infromation between each component
+ */
+const TableContext = createContext(null);
 
-export const Table: React.FC<ITableProps> = ({
-  columns,
-  data,
-  intialTotalRows = 1,
-}) => {
-  const columnsMemo = useMemo(() => columns, []);
+/**
+ * This component to enable the global search in any table instance
+ * @returns search input
+ */
+const Search = () => {
+  const { globalFilter, setGlobalFilter } = useContext(TableContext);
+  return (
+    <SearchInput
+      placeholder="بحث"
+      value={globalFilter}
+      setValue={setGlobalFilter}
+      type="secondary"
+    />
+  );
+};
+
+const FilterList = ({ children }: { children: React.ReactNode }) => {
+  const [isOpent, setIsOpen] = useState(false);
+  return (
+    <button className="flex items-center gap-4 border px-2 py-1 rounded-sm cursor-pointer hover:bg-primary hover:text-white transition-all">
+      <IoFilter size={22} />
+      <p className="hidden lg:block">فلترة</p>
+    </button>
+  );
+};
+
+/**
+ * change the current page based on useReatTable states to check the weather of current page
+ * @returns pages controllers
+ */
+const PagesControlers = () => {
   const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    nextPage,
     previousPage,
-    canNextPage,
     canPreviousPage,
     gotoPage,
-    page,
-    prepareRow,
-    state,
-    setGlobalFilter,
+    pageIndex,
     pageCount,
-    setPageSize,
-  } = useTable(
-    {
-      columns: columnsMemo,
-      data,
-      initialState: {
-        pageSize: intialTotalRows,
-      },
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
+    nextPage,
+    canNextPage,
+  } = useContext(TableContext);
+
+  return (
+    <div className="flex items-center justify-center  gap-2 text-2xl text-primary mt-4">
+      <button
+        className="rounded-full disabled:opacity-50"
+        onClick={() => previousPage()}
+        disabled={!canPreviousPage}
+      >
+        <MdKeyboardArrowRight className="cursor-pointer hover:scale-105 transition-all" />
+      </button>
+      <div className="flex items-center gap-1">
+        {[...Array(pageCount)].map((_, Idx) => (
+          <button
+            onClick={() => gotoPage(Idx)}
+            className={`px-2 text-lg text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white rounded-sm cursor-pointer 
+                        ${
+                          Idx == pageIndex
+                            ? "bg-primary text-white"
+                            : "text-primary"
+                        } `}
+          >
+            {Idx + 1}
+          </button>
+        ))}
+      </div>
+      <button
+        className="rounded-full disabled:opacity-50"
+        onClick={() => nextPage()}
+        disabled={!canNextPage}
+      >
+        <MdKeyboardArrowLeft className="cursor-pointer hover:scale-105 transition-all" />
+      </button>
+    </div>
   );
-  const { globalFilter, pageIndex } = state;
-  state.pageSize = intialTotalRows;
+};
+
+/**
+ * change the number of rows which should displayed in one page
+ * @returns selector component
+ */
+const RowsControlers = () => {
+  const { setPageSize, totalRowsNumber } = useContext(TableContext);
+  return (
+    <div className="flex items-center gap-2  border  w-fit rounded-sm px-2 has-focus-visible:outline-2 outline-primary-dark">
+      <select
+        value={totalRowsNumber}
+        onChange={(e) => setPageSize(e.target.value)}
+        className="outline-none"
+      >
+        <option tabIndex={0} value={5} className="p-2 py-1 text-black">
+          عدد الأسطر 5
+        </option>
+        <option tabIndex={0} value={10} className="p-2 py-1 text-black">
+          عدد الأسطر 10
+        </option>
+        <option tabIndex={0} value={16} className="p-2 py-1 text-black">
+          عدد الأسطر 16
+        </option>
+      </select>
+    </div>
+  );
+};
+
+/**
+ * Main table takes his coulmns and data from react table library
+ * @returns react table component
+ */
+const ReactTable = () => {
+  const { getTableProps, headerGroups, getTableBodyProps, prepareRow, page } =
+    useContext(TableContext);
 
   return (
     <div className="w-full p-2 overflow-x-auto">
-      {/* TABBLE  */}
       <table
         {...getTableProps()}
         className="w-full text-right rounded-md overflow-hidden transition-all"
@@ -109,59 +181,103 @@ export const Table: React.FC<ITableProps> = ({
           })}
         </tbody>
       </table>
-      {/* TABLE CONTROLES  */}
-      <div className="flex justify-between items-center">
-        {/* CHANGE TOTAL ROWS PER PAGE  */}
-        <div className="flex items-center gap-2  border border-primary w-fit rounded-sm px-2 has-focus-visible:outline-2 outline-primary-dark">
-          <select
-            value={state.pageSize}
-            onChange={(e) => setPageSize(e.target.value)}
-            className="outline-none"
-          >
-            <option tabIndex={0} value={5} className="p-2 py-1 text-black">
-              عدد الأسطر 5
-            </option>
-            <option tabIndex={0} value={10} className="p-2 py-1 text-black">
-              عدد الأسطر 10
-            </option>
-            <option tabIndex={0} value={16} className="p-2 py-1 text-black">
-              عدد الأسطر 16
-            </option>
-          </select>
-        </div>
-        {/* CHANGE PAGES CONTROLES  */}
-        <div className="flex items-center justify-center  gap-2 text-2xl text-primary mt-4">
-          <button
-            className="rounded-full disabled:opacity-50"
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            <MdKeyboardArrowRight className="cursor-pointer hover:scale-105 transition-all" />
-          </button>
-          <div className="flex items-center gap-1">
-            {[...Array(pageCount)].map((_, Idx) => (
-              <button
-                onClick={() => gotoPage(Idx)}
-                className={`px-2 text-lg text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white rounded-sm cursor-pointer 
-                                ${
-                                  Idx == pageIndex
-                                    ? "bg-primary text-white"
-                                    : "text-primary"
-                                } `}
-              >
-                {Idx + 1}
-              </button>
-            ))}
-          </div>
-          <button
-            className="rounded-full disabled:opacity-50"
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            <MdKeyboardArrowLeft className="cursor-pointer hover:scale-105 transition-all" />
-          </button>
-        </div>
-      </div>
     </div>
   );
 };
+
+/**
+ * `data`: will be the table's row
+ *  EX: [
+ *    {
+ *      name: 'abdo',
+ *      age: 20
+ *    }
+ *  ]
+ *  `columns`: will be the table's header
+ *  EX : [
+ *    {
+ *      accessor: 'first_name',
+ *      header: 'Name'
+ *    },
+ *    {
+ *       accessor: 'age',
+ *       header: 'Age'
+ *    }
+ *  ]
+ *  `searchKey`: Will contain the search value from global component seaerch
+ */
+interface ITableProps {
+  data: any[];
+  columns: any[];
+  searchKey?: string;
+  filterFn?: () => boolean;
+  children?: React.ReactNode;
+  intialTotalRows: 5 | 10 | 16;
+}
+
+interface IResponse {
+  ReactTable: React.ReactNode;
+  RowsControlers: React.ReactNode;
+  PagesControlers: React.ReactNode;
+  Search: React.ReactNode;
+  Filter: React.ReactNode;
+}
+
+const Table: React.FC<ITableProps, IResponse> = ({
+  columns,
+  data,
+  intialTotalRows = 1,
+  children,
+}) => {
+  const [totalRowsNumber, setTotalRowsNumber] = useState(intialTotalRows);
+  const columnsMemo = useMemo(() => columns, []);
+  const tableInctance = useTable(
+    {
+      columns: columnsMemo,
+      data,
+      initialState: {
+        pageSize: totalRowsNumber,
+      },
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
+  const { globalFilter, pageIndex } = tableInctance.state;
+  tableInctance.state.pageSize = totalRowsNumber;
+
+  /**
+   * This setter to avoide in pridictable behavior becase the setPageSize is not trigger render the compoenent
+   * @param rows Represent the number of rows in each rows
+   */
+  const setRowsNumber = (rows: number) => {
+    tableInctance.setPageSize(rows);
+    setTotalRowsNumber(rows);
+  };
+
+  return (
+    <TableContext.Provider
+      value={{
+        ...tableInctance,
+        globalFilter,
+        pageIndex,
+        totalRowsNumber,
+        setPageSize: setRowsNumber,
+      }}
+    >
+      {children}
+    </TableContext.Provider>
+  );
+};
+
+/**
+ * Create compund component
+ */
+
+Table.RowsControlers = RowsControlers;
+Table.ReactTable = ReactTable;
+Table.PagesControlers = PagesControlers;
+Table.Search = Search;
+Table.FilterList = FilterList;
+
+export default Table;
