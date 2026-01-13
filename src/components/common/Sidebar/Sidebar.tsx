@@ -9,7 +9,7 @@ export const Sidebar = () => {
 
   return (
     <div
-      className={`spacey-y-4 bg-primary-dark min-h-[98dvh] text-white p-4 rounded-md rounded-tl-0 overflow-hidden relative transition-all duration-300
+      className={`spacey-y-4 bg-primary-dark min-h-[98dvh] text-white p-4 rounded-md rounded-tl-0 overflow-hidden transition-all duration-300 sticky top-0
          ${isOpen ? "w-56" : "w-20"}
         `}
       dir="rtl"
