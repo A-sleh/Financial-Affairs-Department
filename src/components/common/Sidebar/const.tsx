@@ -18,11 +18,6 @@ export const sidebarLinks = [
     text: "الفواتير",
   },
   {
-    path: "setting",
-    icon: <IoSettingsSharp size={ICON_SIZE} />,
-    text: "أعدادات",
-  },
-  {
     path: "users",
     icon: <FaUsersCog size={ICON_SIZE} />,
     text: "المستخدمين",
@@ -31,5 +26,10 @@ export const sidebarLinks = [
     path: "breaker-panels",
     icon: <FaSwatchbook size={ICON_SIZE} />,
     text: "لوحات الأمبيرات",
+  },
+  {
+    path: "setting",
+    icon: <IoSettingsSharp size={ICON_SIZE} />,
+    text: "إعدادات",
   },
 ];

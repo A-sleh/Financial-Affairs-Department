@@ -12,8 +12,7 @@ export const DashboardLayout = () => {
         <nav>
           <Navbar />
         </nav>
-        <main>
-          <h1>main</h1>
+        <main className="m-2">
           <Outlet />
         </main>
       </section>

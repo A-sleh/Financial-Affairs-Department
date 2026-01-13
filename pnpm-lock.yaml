@@ -14,6 +14,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.90.16
         version: 5.90.16(react@19.2.0)
+      '@tanstack/react-table':
+        specifier: ^8.21.3
+        version: 8.21.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -29,6 +32,9 @@ importers:
       react-router-dom:
         specifier: ^7.9.6
         version: 7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react-table:
+        specifier: ^7.8.0
+        version: 7.8.0(react@19.2.0)
       tailwindcss:
         specifier: ^4.1.18
         version: 4.1.18
@@ -45,6 +51,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.2
         version: 19.2.3(@types/react@19.2.6)
+      '@types/react-table':
+        specifier: ^7.7.20
+        version: 7.7.20
       '@vitejs/plugin-react':
         specifier: ^5.1.0
         version: 5.1.1(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
@@ -604,6 +613,17 @@ packages:
     peerDependencies:
       react: ^18 || ^19
 
+  '@tanstack/react-table@8.21.3':
+    resolution: {integrity: sha512-5nNMTSETP4ykGegmVkhjcS8tTLW6Vl4axfEGQN3v0zdHYbK4UfoqfPChclTrJ4EoK9QynqAu9oUf8VEmrpZ5Ww==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
+  '@tanstack/table-core@8.21.3':
+    resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
+    engines: {node: '>=12'}
+
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -629,6 +649,9 @@ packages:
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
     peerDependencies:
       '@types/react': ^19.2.0
+
+  '@types/react-table@7.7.20':
+    resolution: {integrity: sha512-ahMp4pmjVlnExxNwxyaDrFgmKxSbPwU23sGQw2gJK4EhCvnvmib2s/O/+y1dfV57dXOwpr2plfyBol+vEHbi2w==}
 
   '@types/react@19.2.6':
     resolution: {integrity: sha512-p/jUvulfgU7oKtj6Xpk8cA2Y1xKTtICGpJYeJXz2YVO2UcvjQgeRMLDGfDeqeRW2Ta+0QNFwcc8X3GH8SxZz6w==}
@@ -1219,6 +1242,11 @@ packages:
     peerDependenciesMeta:
       react-dom:
         optional: true
+
+  react-table@7.8.0:
+    resolution: {integrity: sha512-hNaz4ygkZO4bESeFfnfOft73iBUj8K5oKi1EcSHPAibEydfsX2MyU6Z8KCr3mv3C9Kqqh71U+DhZkFvibbnPbA==}
+    peerDependencies:
+      react: ^16.8.3 || ^17.0.0-0 || ^18.0.0
 
   react@19.2.0:
     resolution: {integrity: sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ==}
@@ -1812,6 +1840,14 @@ snapshots:
       '@tanstack/query-core': 5.90.16
       react: 19.2.0
 
+  '@tanstack/react-table@8.21.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+    dependencies:
+      '@tanstack/table-core': 8.21.3
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+
+  '@tanstack/table-core@8.21.3': {}
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.28.5
@@ -1842,6 +1878,10 @@ snapshots:
       undici-types: 7.16.0
 
   '@types/react-dom@19.2.3(@types/react@19.2.6)':
+    dependencies:
+      '@types/react': 19.2.6
+
+  '@types/react-table@7.7.20':
     dependencies:
       '@types/react': 19.2.6
 
@@ -2438,6 +2478,10 @@ snapshots:
       set-cookie-parser: 2.7.2
     optionalDependencies:
       react-dom: 19.2.0(react@19.2.0)
+
+  react-table@7.8.0(react@19.2.0):
+    dependencies:
+      react: 19.2.0
 
   react@19.2.0: {}
 
