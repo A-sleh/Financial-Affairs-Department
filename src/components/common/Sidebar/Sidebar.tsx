@@ -9,20 +9,31 @@ export const Sidebar = () => {
 
   return (
     <div
-      className={`spacey-y-4 bg-primary-dark min-h-[98dvh] text-white p-4 rounded-md rounded-tl-0 overflow-hidden transition-all duration-300 sticky top-0
-         ${isOpen ? "w-56" : "w-20"}
-        `}
+      className={`z-50 spacey-y-4 bg-primary-dark min-h-[98dvh] text-white p-4 rounded-md rounded-tl-0  transition-all duration-300 sticky top-0
+         ${
+           isOpen
+             ? "max-sm:fixed max-sm:translate-x-[0%] max-sm:h-dvh  max-sm:shadow-[0_0_0_100vw_rgba(0,0,0,0.5)] md:w-20 lg:w-56"
+             : "max-sm:fixed max-sm:translate-x-[110%] w-20"
+         } `}
       dir="rtl"
     >
       {/* Logo  */}
-      <h1 className="text-3xl text-center mb-4 transition-all duration-300">
-        {isOpen ? (
-          <span>
-            <b>FINE</b>bank.<b>IO</b>
+      <h1 className="text-3xl  mb-4 transition-all duration-300 text-center">
+        <span className={isOpen ? "md:hidden lg:block" : "hidden"}>
+          <b>FINE</b>bank.<b>IO</b>
+        </span>
+        <span className={isOpen ? "hidden md:block lg:hidden" : "block"}>F.B</span>
+        {/* {isOpen ? (
+          <span
+            className={`text-nowrap ${
+              isOpen ? "md:hidden lg:block" : "lg:block"
+            }`}
+          >
+            
           </span>
         ) : (
-          "F.B"
-        )}
+          
+        )} */}
       </h1>
 
       {/* navigation links  */}
@@ -38,14 +49,23 @@ export const Sidebar = () => {
               }
             >
               {link.icon}
-              {isOpen && link.text}
+              <p
+                hidden={!isOpen}
+                className={`text-nowrap ${
+                  isOpen ? "md:hidden lg:block" : "lg:block"
+                }`}
+              >
+                {link.text}
+              </p>
             </NavLink>
           </li>
         ))}
       </ul>
 
       <button
-        className={`absolute bottom-0 left-0 rounded-tr-sm p-2 bg-primary cursor-pointer`}
+        className={`absolute bottom-0 left-0 md:rounded-tr-sm p-2 bg-primary cursor-pointer max-sm:rounded-tl-sm ${
+          isOpen ? " max-sm:left-[-19%]" : " max-sm:left-[-50%] "
+        }`}
         onClick={() => setIsOpen(!isOpen)}
         tabIndex={0}
       >
