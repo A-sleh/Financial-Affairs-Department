@@ -15,3 +15,8 @@
   /* Global fonts  */
   --font-arabic: Arabic;
 }
+
+body {
+  scrollbar-color: #428177 transparent ; /* Blue thumb, light gray track */
+  scrollbar-width: thin; /* Makes it thinner */
+}

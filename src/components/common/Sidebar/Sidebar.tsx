@@ -22,18 +22,9 @@ export const Sidebar = () => {
         <span className={isOpen ? "md:hidden lg:block" : "hidden"}>
           <b>FINE</b>bank.<b>IO</b>
         </span>
-        <span className={isOpen ? "hidden md:block lg:hidden" : "block"}>F.B</span>
-        {/* {isOpen ? (
-          <span
-            className={`text-nowrap ${
-              isOpen ? "md:hidden lg:block" : "lg:block"
-            }`}
-          >
-            
-          </span>
-        ) : (
-          
-        )} */}
+        <span className={isOpen ? "hidden md:block lg:hidden" : "block"}>
+          F.B
+        </span>
       </h1>
 
       {/* navigation links  */}
