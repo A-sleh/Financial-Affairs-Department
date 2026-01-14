@@ -17,6 +17,8 @@
 }
 
 body {
+  interpolate-size: allow-keywords;
   scrollbar-color: #428177 transparent ; /* Blue thumb, light gray track */
   scrollbar-width: thin; /* Makes it thinner */
 }
+

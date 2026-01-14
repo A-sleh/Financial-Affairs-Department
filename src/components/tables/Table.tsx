@@ -34,13 +34,25 @@ const Search = () => {
   );
 };
 
-const FilterList = ({ children }: { children: React.ReactNode }) => {
+const FilterList = ({ children = null }: { children: React.ReactNode }) => {
   const [isOpent, setIsOpen] = useState(false);
   return (
-    <button className="flex items-center gap-4 border px-2 py-1 rounded-sm cursor-pointer hover:bg-primary hover:text-white transition-all">
-      <IoFilter size={22} />
-      <p className="hidden lg:block">فلترة</p>
-    </button>
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen((last) => !last)}
+        className="flex items-center gap-4 border px-2 py-1 rounded-sm cursor-pointer hover:bg-primary hover:text-white transition-all"
+      >
+        <IoFilter size={22} />
+        <p className="hidden lg:block">فلترة</p>
+      </button>
+      <div
+        className={`w-10 ${
+          isOpent ? "h-10 p-2" : "h-0 p-0"
+        } bg-white absolute top-[110%] left-0 min-w-50 rounded-sm shadow-[0_0_5px_rgba(0,0,0,.3)] overflow-hidden transition-all`}
+      >
+        {children ? children : <span className="text-sm text-red-500 font-semibold">لايوجد فلاتر</span>}
+      </div>
+    </div>
   );
 };
 
