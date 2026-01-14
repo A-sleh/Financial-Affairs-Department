@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { Navbar } from "../common/Navbar";
 import { Sidebar } from "../common/Sidebar/Sidebar";
+import BreadeCramp from "../common/BreadeCramp";
 
 export const DashboardLayout = () => {
   return (
@@ -13,6 +14,7 @@ export const DashboardLayout = () => {
           <Navbar />
         </nav>
         <main className="m-2">
+          <BreadeCramp />
           <Outlet />
         </main>
       </section>
