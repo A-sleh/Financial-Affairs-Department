@@ -28,7 +28,7 @@ export default function AddNewUser({
         </header>
         <form action="" className="space-y-4" dir="rtl">
           {/* Row one ( name & phone number ) */}
-          <div className="flex gap-5">
+          <div className="flex flex-col md:flex-row gap-5">
             <Input
               value={name}
               setValue={setName}
@@ -46,7 +46,7 @@ export default function AddNewUser({
           </div>
 
           {/* Row Two ( breaker panel position ) */}
-          <div className="flex gap-5">
+          <div className="flex flex-col md:flex-row gap-5">
             <Selector value={name} setValue={setName} label="تحديد مكان اللوحة">
               <option value="hello">hello</option>
               <option value="hello">hello</option>
@@ -54,7 +54,7 @@ export default function AddNewUser({
           </div>
 
           {/* Row Three ( Subscrib type & amount ) */}
-          <div className="flex gap-5">
+          <div className="flex flex-col md:flex-row gap-5">
             <TabsAsCheckBox
               values={[
                 {

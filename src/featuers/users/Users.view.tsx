@@ -1,4 +1,4 @@
-import { Card } from "./components/Card";
+import { Card } from "../../components/shared/Card";
 import Table from "@/components/tables/Table";
 import AddNewUser from "@/components/shared/AddNewUser";
 import { LiaUsersCogSolid } from "react-icons/lia";
@@ -228,24 +228,28 @@ export default function Users() {
           value="100"
           icon={<LiaUsersCogSolid />}
           iconColor="#df0f0f"
+          variant="medium"
         />
         <Card
           title="مشتركين العدادات"
           value="30"
           icon={<TbUserShare />}
           iconColor="#df8c0f"
+          variant="medium"
         />
         <Card
           title="عدد الأمبيرات المباعه"
           value="400"
           icon={<SiElectron />}
           iconColor="#0fdf0f"
+          variant="medium"
         />
         <Card
           title="عدد اللوحات الموزعة"
           value="13"
           icon={<TfiPanel />}
           iconColor="#700fdf"
+          variant="medium"
         />
       </header>
       <Table columns={columns} data={data} intialTotalRows={5}>

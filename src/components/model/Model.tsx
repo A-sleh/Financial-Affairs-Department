@@ -38,7 +38,7 @@ function Window({ children, name }: { children: ReactNode; name: string }) {
 
   return createPortal(
     <div className="flex justify-center items-center fixed inset-0 bg-[rgba(0,0,0,.4)] z-100">
-      <div className="w-fit p-4 rounded-sm bg-white">
+      <div className="w-[90vw] md:w-fit p-4 rounded-sm bg-white">
         {children}
       </div>
     </div>,

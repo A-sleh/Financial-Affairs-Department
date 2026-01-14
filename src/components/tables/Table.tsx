@@ -145,7 +145,7 @@ const ReactTable = () => {
     <div className="w-full p-2 overflow-x-auto">
       <table
         {...getTableProps()}
-        className="w-full text-right overflow-hidden  transition-all text-nowrap"
+        className="w-full text-right overflow-hidden rounded-sm transition-all text-nowrap"
       >
         {/*  TABLE HEADER  */}
         <thead className="w-full bg-primary text-white">
