@@ -6,13 +6,14 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 
 export const Sidebar = () => {
   const [isOpen, setIsOpen] = useLocalStorage("nav-bar-open-state");
+  const isSmallScreenMedia = window.matchMedia("(max-width: 767px)").matches;
 
   return (
     <div
-      className={`z-50 spacey-y-4 bg-primary-dark min-h-[98dvh] text-white p-4 rounded-md rounded-tl-0  transition-all duration-300 sticky top-0
+      className={`z-50 spacey-y-4 bg-primary-dark min-h-dvh md:min-h-[98dvh] text-white p-4 rounded-md rounded-tl-0  transition-all duration-300 sticky top-0
          ${
            isOpen
-             ? "max-sm:fixed max-sm:translate-x-[0%] max-sm:h-dvh  max-sm:shadow-[0_0_0_100vw_rgba(0,0,0,0.5)] md:w-20 lg:w-56"
+             ? "max-sm:fixed max-sm:translate-x-[5%] max-sm:h-dvh  max-sm:shadow-[0_0_0_100vw_rgba(0,0,0,0.5)] md:w-20 lg:w-56"
              : "max-sm:fixed max-sm:translate-x-[110%] w-20"
          } `}
       dir="rtl"
@@ -33,6 +34,7 @@ export const Sidebar = () => {
           <li key={Idx}>
             <NavLink
               to={link.path}
+              onClick={() => isSmallScreenMedia && setIsOpen(false)}
               className={({ isActive }) =>
                 `flex gap-3 itmes-center px-3 py-2 text-lg ${
                   isActive ? "bg-primary" : "transform"

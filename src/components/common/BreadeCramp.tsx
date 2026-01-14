@@ -7,6 +7,7 @@ const mappingRoutesToArabic: any = {
   billing: "الفواتير",
   statistics: "الإحصائيات",
   setting: "الإعدادات",
+  user: "المستخدم",
 };
 
 export default function BreadeCramp() {
@@ -22,11 +23,12 @@ export default function BreadeCramp() {
   };
 
   return (
-    <div className="my-3">
+    <div className="my-3 flex items-center">
       {routes.map((route, Idx) => {
-        if (route)
+        if (route && isNaN(+route))
           return (
             <button
+              key={Idx}
               onClick={() => handleRouteClicked(Idx)}
               className={`flex items-center gap-2 text-xl cursor-pointer ${
                 Idx == indexLastItems ? "text-primary" : "text-black"

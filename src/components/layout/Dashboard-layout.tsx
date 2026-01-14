@@ -6,7 +6,7 @@ import BreadeCramp from "../common/BreadeCramp";
 export const DashboardLayout = () => {
   return (
     <section className="flex font-arabic" dir="rtl">
-      <aside className="m-[1vh] ml-0 ">
+      <aside className="m-[1vh] ml-0">
         <Sidebar />
       </aside>
       <section className="m-[1vh] mr-0 w-full">

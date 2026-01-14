@@ -3,6 +3,7 @@ import { SiElectron } from "react-icons/si";
 import { FaUsers } from "react-icons/fa";
 import { LiaUsersCogSolid } from "react-icons/lia";
 import { AiTwotoneContainer } from "react-icons/ai";
+import { Link } from "react-router";
 
 export default function BreackerPanelCard() {
   return (
@@ -38,9 +39,11 @@ export default function BreackerPanelCard() {
           variant="small"
         />
       </header>
-      <button className="w-full px-2 py-1 bg-primary text-white hover:bg-white hover:text-primary transition-all border-t border-primary mt-3 cursor-pointer ">
-        عرض تفاصيل اللوحة
-      </button>
+      <Link to={"user/1"}>
+        <button className="w-full px-2 py-1 bg-primary text-white hover:bg-white hover:text-primary transition-all border-t border-primary mt-3 cursor-pointer">
+          عرض تفاصيل اللوحة
+        </button>
+      </Link>
     </div>
   );
 }

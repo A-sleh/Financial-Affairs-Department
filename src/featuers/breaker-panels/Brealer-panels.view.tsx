@@ -11,7 +11,7 @@ export default function BreakerPanels() {
     <section className="space-y-4">
       <header className="flex items-center justify-between">
         <Search type="secondary" placeholder="بحث" value={name} setValue={setName} />
-        <h3 className="text-2xl self-end before:content-['--'] after:content-['--'] before:text-primary after:text-primary ">يوجد <b>10</b> لوحات</h3>
+        <h3 className="hidden md:block text-2xl self-end before:content-['--'] after:content-['--'] before:text-primary after:text-primary ">يوجد <b>10</b> لوحات</h3>
         <AddNewBreakerPanel
           openingButton={
             <button className="flex gap-2 items-center border-2 border-primary bg-primary text-white hover:bg-transparent hover:text-primary transition-all px-2 py-1 rounded-sm cursor-pointer">

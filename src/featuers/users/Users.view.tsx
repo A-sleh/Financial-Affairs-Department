@@ -222,7 +222,7 @@ export default function Users() {
   ];
   return (
     <section>
-      <header className="flex flex-wrap gap-5 my-4">
+      <header className="flex flex-wrap gap-5 my-4 max-sm:ml-4">
         <Card
           title="مشتركين المقطوعه"
           value="100"
@@ -253,12 +253,12 @@ export default function Users() {
         />
       </header>
       <Table columns={columns} data={data} intialTotalRows={5}>
-        <div className="flex items-center justify-between mx-2">
-          <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2 mx-2">
+          <div className="flex gap-2 max-sm:w-full">
             <Table.RowsControlers />
             <Table.Search />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 max-sm:w-full">
             <Table.FilterList />
             <AddNewUser
               openingButton={

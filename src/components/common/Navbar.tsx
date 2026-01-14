@@ -16,7 +16,7 @@ export const Navbar = () => {
         </button>
         <AddNewUser
           openingButton={
-            <button className="flex gap-2 items-center border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all px-2 py-1 rounded-sm cursor-pointer">
+            <button className="flex gap-2 items-center border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all px-2 py-1 rounded-sm cursor-pointer ml-1">
               <AiOutlineUserAdd size={22} />
               <p className="hidden lg:block"> إضافة زبون</p>
             </button>

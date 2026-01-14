@@ -48,9 +48,15 @@ const FilterList = ({ children = null }: { children: React.ReactNode }) => {
       <div
         className={`w-10 ${
           isOpent ? "h-10 p-2" : "h-0 p-0"
-        } bg-white absolute top-[110%] left-0 min-w-50 rounded-sm shadow-[0_0_5px_rgba(0,0,0,.3)] overflow-hidden transition-all`}
+        } bg-white absolute top-[110%] max-sm:right-0 md:left-0 min-w-50 rounded-sm shadow-[0_2px_5px_rgba(0,0,0,.3)] overflow-hidden transition-all`}
       >
-        {children ? children : <span className="text-sm text-red-500 font-semibold">لايوجد فلاتر</span>}
+        {children ? (
+          children
+        ) : (
+          <span className="text-sm text-red-500 font-semibold">
+            لايوجد فلاتر
+          </span>
+        )}
       </div>
     </div>
   );
@@ -83,6 +89,7 @@ const PagesControlers = () => {
       <div className="flex items-center gap-1">
         {[...Array(pageCount)].map((_, Idx) => (
           <button
+            key={Idx}
             onClick={() => gotoPage(Idx)}
             className={`px-2 text-lg text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white rounded-sm cursor-pointer 
                         ${
@@ -149,11 +156,12 @@ const ReactTable = () => {
       >
         {/*  TABLE HEADER  */}
         <thead className="w-full bg-primary text-white">
-          {headerGroups?.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
+          {headerGroups?.map((headerGroup, Idx) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={Idx}>
+              {headerGroup.headers.map((column, Idx) => (
                 <th
                   // @ts-ignore
+                  key={Idx}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   className="px-2 py-2 text-[14px] has-focus-visible:outline-2 cursor-pointer "
                 >
@@ -175,13 +183,15 @@ const ReactTable = () => {
             prepareRow(row);
             return (
               <tr
+                key={Idx}
                 {...row.getRowProps()}
                 className={`${
                   Idx % 2 ? "bg-white" : "bg-transparent"
                 } cursor-pointer hover:bg-primary/20`}
               >
-                {row.cells.map((cell: any) => (
+                {row.cells.map((cell: any, Idx) => (
                   <td
+                    key={Idx}
                     {...cell.getCellProps()}
                     className="px-4 py-3 text-sm border-t  border-primary/50 "
                   >
