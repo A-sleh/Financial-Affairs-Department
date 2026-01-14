@@ -1,11 +1,11 @@
-import Table from "@/components/tables/Table";
 import { Card } from "./components/Card";
-
+import Table from "@/components/tables/Table";
+import AddNewUser from "@/components/shared/AddNewUser";
 import { LiaUsersCogSolid } from "react-icons/lia";
-import { FaPlus } from "react-icons/fa6";
 import { TbUserShare } from "react-icons/tb";
 import { SiElectron } from "react-icons/si";
 import { TfiPanel } from "react-icons/tfi";
+import { FaPlus } from "react-icons/fa6";
 
 export default function Users() {
   const columns = [
@@ -256,10 +256,14 @@ export default function Users() {
           </div>
           <div className="flex gap-2">
             <Table.FilterList />
-            <button className="flex gap-2 items-center border-2 border-primary bg-primary text-white hover:bg-transparent hover:text-primary transition-all px-2 py-1 rounded-sm cursor-pointer">
-              <FaPlus size={22} />
-              <p className="hidden lg:block"> إضافة زبون</p>
-            </button>
+            <AddNewUser
+              openingButton={
+                <button className="flex gap-2 items-center border-2 border-primary bg-primary text-white hover:bg-transparent hover:text-primary transition-all px-2 py-1 rounded-sm cursor-pointer">
+                  <FaPlus size={22} />
+                  <p className="hidden lg:block"> إضافة زبون</p>
+                </button>
+              }
+            />
           </div>
         </div>
         <Table.ReactTable />
