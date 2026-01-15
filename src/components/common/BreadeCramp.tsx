@@ -14,10 +14,21 @@ export default function BreadeCramp() {
   const changePathTo = useNavigate();
   const currentPath = window.location.pathname;
   const routes = currentPath.split("/");
-  const indexLastItems = routes.length - 1;
+  const hasIdInPathPramas = isNaN(+routes[routes.length - 1]) ? 0 : 1;
+  const indexLastItems = routes.length - (1 + hasIdInPathPramas);
+
+  /**
+   * this function will do:
+   * endpath: the index of sub path which user was clicked and ! check if the path has :id and the click on last sub path i will add the id in the final path or dosen't put it)
+   * subRoutes: create the new URL route will go to there
+   * @param routeIndex the sub path which user click on it
+   * @returns will not return any thing just change the navigation
+   */
 
   const handleRouteClicked = (routeIndex: number) => {
-    const subRoutes = routes.slice(0, routeIndex + 1).join("/");
+    const endPath =
+      routeIndex + (hasIdInPathPramas && routeIndex == indexLastItems ? 1 : 0);
+    const subRoutes = routes.slice(0, endPath + 1).join("/");
     if (currentPath == subRoutes) return;
     changePathTo(subRoutes as string);
   };

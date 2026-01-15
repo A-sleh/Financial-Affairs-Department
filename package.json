@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host=192.168.27.67",
+    "dev": "vite",
+    "dev:online": "vite --host=192.168.27.67",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
