@@ -3,7 +3,6 @@ import type { RouteObject } from "react-router";
 import { DashboardLayout } from "@/components/layout/Dashboard-layout";
 
 // Bundle split for each section
-const Billing = lazy(() => import("@/featuers/billing/Billing.view"));
 const Statistics = lazy(() => import("@/featuers/statistics/Statistics.view"));
 const Setting = lazy(() => import("@/featuers/setting/Setting.view"));
 const Users = lazy(() => import("@/featuers/users/Users.view"));
@@ -16,6 +15,10 @@ const BreakerPanels = lazy(
 const BreakerPanel = lazy(
   () => import("@/featuers/breaker-panel/Breaker-panel.view")
 );
+
+// Billing section
+const Billing = lazy(() => import("@/featuers/billing/Billing.view"));
+const OpendedBills = lazy(() => import("@/featuers/opned-bills/Opened-bills"));
 
 export const router: RouteObject[] = [
   {
@@ -30,6 +33,20 @@ export const router: RouteObject[] = [
       {
         path: "billing",
         element: <Billing />,
+        children: [
+          {
+            index: true,
+            element: <h1>bill details</h1>,
+          },
+          {
+            path: "weekly-bills",
+            element: <h1>weekly details</h1>,
+          },
+          {
+            path: "new-bill",
+            element: <OpendedBills />,
+          },
+        ],
       },
       {
         path: "users",

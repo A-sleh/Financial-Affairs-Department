@@ -8,6 +8,8 @@ const mappingRoutesToArabic: any = {
   statistics: "الإحصائيات",
   setting: "الإعدادات",
   user: "المستخدم",
+  "weekly-bills": "الفواتير الأسبوعية",
+  "new-bill": "الفواتير الأسبوعية المفتوحة"
 };
 
 export default function BreadeCramp() {
