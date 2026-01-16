@@ -77,42 +77,125 @@ const PagesControlers = () => {
     canNextPage,
   } = useContext(TableContext);
 
+  const getPaginationRange = () => {
+    const currentPage = pageIndex;
+    const totalPages = pageCount;
+
+    if (totalPages <= 10) {
+      return Array.from({ length: totalPages }, (_, i) => i);
+    }
+
+    const visiblePageCount = 7; // Show 7 items including ellipsis
+    const result = [];
+
+    // Always show first page
+    result.push(0);
+
+    // Calculate start and end of middle pages
+    let startPage = Math.max(1, currentPage - 1);
+    let endPage = Math.min(totalPages - 2, currentPage + 1);
+
+    // Adjust if we're near the beginning
+    if (currentPage <= 3) {
+      endPage = 4;
+    }
+
+    // Adjust if we're near the end
+    if (currentPage >= totalPages - 4) {
+      startPage = totalPages - 5;
+    }
+
+    // Add first ellipsis if needed
+    if (startPage > 1) {
+      result.push("ellipsis-start");
+    }
+
+    // Add middle pages
+    for (let i = startPage; i <= endPage; i++) {
+      if (i > 0 && i < totalPages - 1) {
+        result.push(i);
+      }
+    }
+
+    // Add second ellipsis if needed
+    if (endPage < totalPages - 2) {
+      result.push("ellipsis-end");
+    }
+
+    // Always show last page
+    result.push(totalPages - 1);
+
+    return result;
+  };
+
+  const paginationRange = getPaginationRange();
+
   return (
-    <div className="flex items-center justify-center  gap-2 text-2xl text-primary mt-4">
-      <button
-        className="rounded-full disabled:opacity-50"
-        onClick={() => previousPage()}
-        disabled={!canPreviousPage}
-      >
-        <MdKeyboardArrowRight className="cursor-pointer hover:scale-105 transition-all" />
-      </button>
-      <div className="flex items-center gap-1">
-        {[...Array(pageCount)].map((_, Idx) => (
-          <button
-            key={Idx}
-            onClick={() => gotoPage(Idx)}
-            className={`px-2 text-lg text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white rounded-sm cursor-pointer 
-                        ${
-                          Idx == pageIndex
-                            ? "bg-primary text-white"
-                            : "text-primary"
-                        } `}
-          >
-            {Idx + 1}
-          </button>
-        ))}
+    <div className="flex flex-col items-center gap-4 mt-4">
+      <div className="flex items-center justify-center gap-2 text-2xl text-primary">
+        <button
+          className="rounded-full p-1 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+          aria-label="Previous page"
+        >
+          <MdKeyboardArrowRight className="w-6 h-6" />
+        </button>
+
+        <div className="flex items-center gap-1">
+          {paginationRange.map((page, idx) => {
+            if (typeof page === "string") {
+              return (
+                <span
+                  key={`${page}-${idx}`}
+                  className="px-2 text-lg text-gray-400 select-none"
+                  aria-hidden="true"
+                >
+                  ...
+                </span>
+              );
+            }
+
+            return (
+              <button
+                key={page}
+                onClick={() => gotoPage(page)}
+                className={`
+                  w-10 h-10 flex items-center justify-center rounded-md
+                  text-base font-medium transition-all duration-200
+                  ${
+                    page === pageIndex
+                      ? "bg-primary text-white shadow-sm"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  }
+                `}
+                aria-label={`Go to page ${page + 1}`}
+                aria-current={page === pageIndex ? "page" : undefined}
+              >
+                {page + 1}
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          className="rounded-full p-1 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+          aria-label="Next page"
+        >
+          <MdKeyboardArrowLeft className="w-6 h-6" />
+        </button>
       </div>
-      <button
-        className="rounded-full disabled:opacity-50"
-        onClick={() => nextPage()}
-        disabled={!canNextPage}
-      >
-        <MdKeyboardArrowLeft className="cursor-pointer hover:scale-105 transition-all" />
-      </button>
+
+      {/* Optional: Show current page info */}
+      <div className="text-sm text-gray-500">
+        Page <span className="font-semibold">{pageIndex + 1}</span> of{" "}
+        <span className="font-semibold">{pageCount}</span>
+      </div>
     </div>
   );
 };
-
 /**
  * change the number of rows which should displayed in one page
  * @returns selector component

@@ -1,34 +1,24 @@
 import Table from "@/components/tables/Table";
-import AddWeeklyBill from "../../components/shared/Add-weekly-bill";
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import { FaPenToSquare } from "react-icons/fa6";
-import { FaPlus } from "react-icons/fa6";
+import { MdAddCard } from "react-icons/md";
 
-const OpendedBills = () => {
+export default function WeeklyBills() {
   const columns = [
-    { Header: "تاريخ الفاتورة", accessor: "bill_date" },
-    { Header: "سعر الأمبير الواحد", accessor: "amper_price" },
-    { Header: "سعر الكيلو للعداد", accessor: "counter_privce_per_K" },
-    { Header: "المبلغ الإجمالي", accessor: "total_price" },
-    { Header: "المبلغ المسدد", accessor: "recived_price" },
+    { Header: "اسم الزبون", accessor: "bill_date" },
+    { Header: "تاريخ الفاتورة", accessor: "amper_price" },
+    { Header: "المبلغ المطلوب", accessor: "counter_privce_per_K" },
+    { Header: "المبلغ المسدد", accessor: "total_price" },
+    { Header: "تاريخ التسديد", accessor: "recived_price" },
     {
       Header: "إجرائيات",
       accessor: "action",
       Cell: ({ row }: { row: any }) => (
         <div className="flex gap-1 items-center text-2xl">
-          <MdOutlineDeleteOutline className="p-1 rounded-full text-red-600 hover:bg-red-600/20" />
-          <span className="h-3.75 mx-2 w-px bg-primary"></span>
-          <AddWeeklyBill
-            intialState={row.original}
-            openingButton={
-              <FaPenToSquare className="p-1 rounded-full text-blue-600 hover:bg-blue-600/20" />
-            }
-          />
+          <MdAddCard className="p-1 rounded-full text-blue-600 hover:bg-blue-600/20" />
         </div>
       ),
     },
   ];
-  const data = [
+  const test = [
     {
       id: 1,
       amper_price: "2.5 دينار",
@@ -110,9 +100,12 @@ const OpendedBills = () => {
       bill_date: "2025-22-12",
     },
   ];
-
+  let data: any[] = [];
+  for (let i = 25; i > 0; --i) {
+    data = [...data, ...test];
+  }
   return (
-    <section >
+    <section>
       <Table columns={columns} data={data} intialTotalRows={5}>
         <div className="flex flex-col md:flex-row items-center justify-between gap-2 mx-2">
           <div className="flex gap-2 max-sm:w-full">
@@ -121,14 +114,6 @@ const OpendedBills = () => {
           </div>
           <div className="flex gap-2 max-sm:w-full">
             <Table.FilterList />
-            <AddWeeklyBill
-              openingButton={
-                <button className="flex gap-2 items-center border-2 border-primary bg-primary text-white hover:bg-transparent hover:text-primary transition-all px-2 py-1 rounded-sm cursor-pointer">
-                  <FaPlus size={22} />
-                  <p className="hidden lg:block"> انشاء فاتورة</p>
-                </button>
-              }
-            />
           </div>
         </div>
         <Table.ReactTable />
@@ -136,6 +121,4 @@ const OpendedBills = () => {
       </Table>
     </section>
   );
-};
-
-export default OpendedBills;
+}

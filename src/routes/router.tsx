@@ -15,6 +15,9 @@ const BreakerPanels = lazy(
 const BreakerPanel = lazy(
   () => import("@/featuers/breaker-panel/Breaker-panel.view")
 );
+const WeeklyBills = lazy(
+  () => import("@/featuers/weekly-bills/Weekly-bills")
+);
 
 // Billing section
 const Billing = lazy(() => import("@/featuers/billing/Billing.view"));
@@ -40,7 +43,7 @@ export const router: RouteObject[] = [
           },
           {
             path: "weekly-bills",
-            element: <h1>weekly details</h1>,
+            element: <WeeklyBills />,
           },
           {
             path: "new-bill",
