@@ -9,7 +9,7 @@ const mappingRoutesToArabic: any = {
   setting: "الإعدادات",
   user: "المستخدم",
   "weekly-bills": "الفواتير الأسبوعية",
-  "new-bill": "الفواتير الأسبوعية المفتوحة"
+  "new-user-bill": "إدراج فاتورة زبون"
 };
 
 export default function BreadeCramp() {

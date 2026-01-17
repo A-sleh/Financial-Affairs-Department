@@ -11,8 +11,8 @@ const SUB_LINKS = [
     title: "الفواتير الأسبوعية",
   },
   {
-    path: "new-bill",
-    title: "الفواتير المفتوحة",
+    path: "new-user-bill",
+    title: "إدراج فاتورة زبون",
   },
 ];
 
