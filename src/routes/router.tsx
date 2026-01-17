@@ -21,7 +21,7 @@ const WeeklyBills = lazy(
 
 // Billing section
 const Billing = lazy(() => import("@/featuers/billing/Billing.view"));
-const OpendedBills = lazy(() => import("@/featuers/opned-bills/Opened-bills"));
+const UserBill = lazy(() => import("@/featuers/user-bill/User-bill"));
 
 export const router: RouteObject[] = [
   {
@@ -46,8 +46,8 @@ export const router: RouteObject[] = [
             element: <WeeklyBills />,
           },
           {
-            path: "new-bill",
-            element: <OpendedBills />,
+            path: "new-user-bill",
+            element: <UserBill />,
           },
         ],
       },

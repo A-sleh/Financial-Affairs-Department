@@ -1,4 +1,6 @@
+import AddWeeklyBill from "@/components/shared/Add-weekly-bill";
 import Table from "@/components/tables/Table";
+import { FaPlus } from "react-icons/fa6";
 import { MdAddCard } from "react-icons/md";
 
 export default function WeeklyBills() {
@@ -114,6 +116,14 @@ export default function WeeklyBills() {
           </div>
           <div className="flex gap-2 max-sm:w-full">
             <Table.FilterList />
+            <AddWeeklyBill
+              openingButton={
+                <button className="flex gap-2 items-center border-2 border-primary bg-primary text-white hover:bg-transparent hover:text-primary transition-all px-2 py-1 rounded-sm cursor-pointer">
+                  <FaPlus size={22} />
+                  <p className="hidden lg:block"> انشاء فاتورة</p>
+                </button>
+              }
+            />
           </div>
         </div>
         <Table.ReactTable />
