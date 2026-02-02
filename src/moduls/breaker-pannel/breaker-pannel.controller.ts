@@ -12,6 +12,11 @@ export class BreakerPannelController {
     return this.breakerPannelService.create(createBreakerPannelDto);
   }
 
+  @Get()
+  findAll() {
+    return this.breakerPannelService.findAll();
+  }
+
   @Patch(':id')
   update(@Param('id',ParseIntPipe) id: string, @Body() updateBreakerPannelDto: UpdateBreakerPannelDto) {
     return this.breakerPannelService.update(+id, updateBreakerPannelDto);

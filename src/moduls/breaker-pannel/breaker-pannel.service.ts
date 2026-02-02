@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { InternalServerErrorException, Injectable, BadRequestException } from '@nestjs/common';
 import { CreateBreakerPannelDto } from './dto/create-breaker-pannel.dto';
 import { UpdateBreakerPannelDto } from './dto/update-breaker-pannel.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,8 +23,13 @@ export class BreakerPannelService {
         this.breakerPannelRepository.save(breakerPannel);
       return savedBreakerPannel;
     } catch (error) {
-      throw new BadRequestException('Failed to create breaker pannel');
+      throw new InternalServerErrorException('Failed to create breaker pannel');
     }
+  }
+
+  findAll() {
+    const allBreakerPannels = this.breakerPannelRepository.find();
+    return allBreakerPannels;
   }
 
   async update(id: number, updateBreakerPannelDto: UpdateBreakerPannelDto) {

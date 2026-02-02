@@ -8,7 +8,7 @@ import {
 import { BreakerPannel } from '@/moduls/breaker-pannel/entities/breaker-pannel.entity';
 import { User } from '@/moduls/user/entities/user.entity';
 
-enum Subscription_type {
+export enum Subscription_type {
   counter = 'counter',
   breaker = 'breaker',
 }
@@ -18,13 +18,13 @@ export class BreakerPannelsUser {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @JoinColumn({ name: 'user' })
+  @JoinColumn({ name: 'users' })
   @ManyToOne(() => User)
-  user: User;
+  users: User;
 
-  @JoinColumn({ name: 'breaker_pannel' })
+  @JoinColumn({ name: 'breaker_pannels' })
   @ManyToOne(() => BreakerPannel)
-  breaker_pannel: BreakerPannel;
+  breaker_pannels: BreakerPannel;
 
   @Column({
     type: 'enum',
@@ -37,6 +37,6 @@ export class BreakerPannelsUser {
   quantity: string;
 
   
-  @Column('int')
-  counter_intial_value: number;
+  @Column('int', { nullable: true })
+  counter_intial_value: number | null;
 }
