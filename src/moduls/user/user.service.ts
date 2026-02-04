@@ -2,9 +2,12 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BreakerPannelsUser } from '../breaker-pannels-users/entities/breaker-pannels-user.entity';
+import {
+  BreakerPannelsUser,
+  Subscription_type,
+} from '../breaker-pannels-users/entities/breaker-pannels-user.entity';
 import { BreakerPannel } from '../breaker-pannel/entities/breaker-pannel.entity';
 
 @Injectable()
@@ -19,46 +22,72 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const findeBreakerPannel = await this.breakerPannelRepository.findOneBy({
-      breaker_pannel_id: createUserDto.breaker_pannel_id,
+    return this.userRepository.save(createUserDto);
+  }
+
+  async findAll(search: string) {
+    return this.userRepository.findBy({
+      full_name: search ? Like(`%${search}%`) : Like(`%%`),
     });
+  }
 
-    console.log(findeBreakerPannel);
+  async findAllUsersDetails() {
+    let users: BreakerPannelsUser[] =
+      (await this.breakerPannelsUserRepository.find({
+        relations: {
+          user: true,
+          breaker_pannel: true,
+        },
+      })) as BreakerPannelsUser[];
 
-    if (!findeBreakerPannel) {
-      throw new BadRequestException('Breaker Pannel not found');
-    }
+    return users.reduce((acc, curr) => {
+      acc.push({
+        ...curr.user,
+        ...curr.breaker_pannel,
+        subscribe_type: curr.subscribe_type,
+        quantity: curr.quantity,
+        counter_intial_value: curr.counter_intial_value,
+      });
+      return acc;
+    }, [] as any[]);
+  }
 
-    const user = new User();
+  async getUsersStats() {
+    const UsersHasCounter = await this.breakerPannelsUserRepository.find({
+      where: {
+        subscribe_type: Subscription_type.counter,
+      },
+    });
+    const UsersHasBreaker = await this.breakerPannelsUserRepository.find({
+      where: {
+        subscribe_type: Subscription_type.breaker,
+      },
+    });
+    const breakerPannels = await this.breakerPannelRepository.count();
 
-    user.full_name = createUserDto.full_name;
-    user.phone = createUserDto.phone;
-
-    this.userRepository.save(user);
-
-    const breakerPannelsUser = new BreakerPannelsUser();
-    breakerPannelsUser.users = user;
-    breakerPannelsUser.breaker_pannels = findeBreakerPannel;
-    breakerPannelsUser.subscribe_type = createUserDto.subscribe_type;
-    breakerPannelsUser.quantity = createUserDto.quantity;
-    breakerPannelsUser.counter_intial_value =
-      createUserDto.counter_intial_value;
-
-    this.breakerPannelsUserRepository.save(breakerPannelsUser);
-
-    return breakerPannelsUser;
-  }   
-
-  findAll() {
-    return this.userRepository.find();
+    return {
+      UsersHasCounter: UsersHasCounter.length,
+      UsersHasBreaker: UsersHasBreaker.length,
+      breakerPannels,
+      sellingAmpers: UsersHasBreaker.reduce((acc, curr) => {
+        return acc + parseInt(curr.quantity);
+      }, 0),
+    };
   }
 
   findOne(id: number) {
-    return this.userRepository.findOneBy({ id });
+    return this.userRepository.findOneBy({ user_id: id });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update(id, updateUserDto);
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    let findUser = await this.userRepository.findOneBy({ user_id: id });
+
+    if (!findUser) {
+      throw new BadRequestException('User not found');
+    }
+
+    this.userRepository.update(id, updateUserDto);
+    return { ...findUser, ...updateUserDto };
   }
 
   remove(id: number) {

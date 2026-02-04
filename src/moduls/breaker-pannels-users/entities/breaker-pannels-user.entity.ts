@@ -18,13 +18,13 @@ export class BreakerPannelsUser {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @JoinColumn({ name: 'users' })
-  @ManyToOne(() => User)
-  users: User;
+  @JoinColumn({ name: 'user' })
+  @ManyToOne(() => User,(user)=> user.pannels)
+  user: User;
 
-  @JoinColumn({ name: 'breaker_pannels' })
+  @JoinColumn({ name: 'breaker_pannel' })
   @ManyToOne(() => BreakerPannel)
-  breaker_pannels: BreakerPannel;
+  breaker_pannel: BreakerPannel;
 
   @Column({
     type: 'enum',

@@ -3,18 +3,23 @@ import {
   Column,
   PrimaryGeneratedColumn,
   Entity,
-  ManyToOne,
-  JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  user_id: number;
 
   @Column('varchar', { length: 255 })
   full_name: string;
 
   @Column('varchar', { length: 12 })
   phone: string;
+
+  @OneToMany(
+    () => BreakerPannelsUser,
+    (breakerPannelsUser) => breakerPannelsUser.user,
+  )
+  pannels: BreakerPannelsUser[];
 }

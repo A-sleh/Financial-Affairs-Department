@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { BreakerPannelsUsersService } from './breaker-pannels-users.service';
 import { CreateBreakerPannelsUserDto } from './dto/create-breaker-pannels-user.dto';
 import { UpdateBreakerPannelsUserDto } from './dto/update-breaker-pannels-user.dto';
 
-@Controller('breaker-pannels-users')
+@Controller('breaker-pannels-user')
 export class BreakerPannelsUsersController {
   constructor(private readonly breakerPannelsUsersService: BreakerPannelsUsersService) {}
 
@@ -15,6 +15,11 @@ export class BreakerPannelsUsersController {
   @Get()
   findAll() {
     return this.breakerPannelsUsersService.findAll();
+  }
+
+  @Get("stats")
+  getAllPannelsStat(@Query("search") search: string) {
+    return this.breakerPannelsUsersService.getAllPannelsStat(search);
   }
 
   @Get(':id')
