@@ -1,6 +1,6 @@
 interface ICardProps {
   title: string;
-  value: string;
+  value: string | number;
   icon: React.ReactNode;
   iconColor: string;
   variant: "small" | "medium";
