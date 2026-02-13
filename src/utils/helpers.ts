@@ -22,3 +22,15 @@ export function getCurrentDate() {
   // Set the value of the input element
   return formattedDate;
 }
+
+const convertToArabicDigits = (num: string) => {
+  const arabicDigits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+  return String(num).replace(/\d/g, (d) => arabicDigits[Number(d)]);
+};
+
+export const formatNumberWithSpaces = (value: string) => {
+  const cleanValue = value.replace(/\s+/g, "").replace(/\D/g, "");
+  const formatted = cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  return convertToArabicDigits(formatted);
+};

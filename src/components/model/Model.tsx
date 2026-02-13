@@ -42,7 +42,7 @@ function Window({ children, name }: { children: ReactNode; name: string }) {
         {children}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }
 
