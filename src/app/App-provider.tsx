@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { router as nativeRouter } from "@/routes/router";
+import { Toaster } from "react-hot-toast";
 
 export default function AppProvider({
   children,
@@ -19,6 +20,7 @@ export default function AppProvider({
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <Toaster />
       {children}
     </QueryClientProvider>
   );
