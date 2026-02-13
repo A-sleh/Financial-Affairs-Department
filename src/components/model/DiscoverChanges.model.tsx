@@ -13,7 +13,7 @@ export default function DiscoverChanges({
 }: IDiscoverChangesProps) {
   return (
     <div
-      className="flex justify-between items-center gap-2 rounded-md bg-primary text-white p-2 text-[0.8rem] md:text-[1rem] absolute right-[50%] translate-x-[50%] min-w-[30rem] z-50"
+      className="flex justify-between items-center gap-2 rounded-md bg-primary text-white p-2 text-[0.8rem] md:text-[1rem] absolute right-[50%] translate-x-[50%] min-w-[90%] md:min-w-[30rem] z-50"
       style={{
         bottom: isOpened ? "2%" : "-100%",
         display: isOpened ? "flex" : "none",
