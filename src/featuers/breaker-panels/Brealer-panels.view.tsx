@@ -5,13 +5,12 @@ import { FaPlus } from "react-icons/fa6";
 import BreackerPanelCard from "./components/BreackerPanelCard";
 import AddNewBreakerPanel from "./components/AddNewBreakerPanel";
 import getAllBreakerPannels from "./api/get-breaker-pannels";
+import SkeletonBreakerPannel from "@/components/skeleton/Breaker-pannel-container.sk";
 
 export default function BreakerPanels() {
   const { breakerPannels, isLoading } = getAllBreakerPannels();
   const [name, setName] = useState("");
 
-  if(isLoading) return "loaddinnnnng...."
-  
   return (
     <section className="space-y-4">
       <header className="flex items-center justify-between">
@@ -34,9 +33,15 @@ export default function BreakerPanels() {
         />
       </header>
       <div className="flex gap-4 flex-wrap">
-        {breakerPannels?.map((breakerPannel,Idx) => {
-          return <BreackerPanelCard key={Idx} breakerPannel={breakerPannel} />
-        })}
+        {isLoading ? (
+          <SkeletonBreakerPannel />
+        ) : (
+          breakerPannels?.map((breakerPannel, Idx) => {
+            return (
+              <BreackerPanelCard key={Idx} breakerPannel={breakerPannel} />
+            );
+          })
+        )}
       </div>
     </section>
   );
