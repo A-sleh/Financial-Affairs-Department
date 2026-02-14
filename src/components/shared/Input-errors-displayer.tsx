@@ -17,9 +17,8 @@ export default function DisplayInputErrors({
         render={({ messages }) =>
           messages &&
           Object.entries(messages).map(([type, message]) => {
-            console.log("type", type, "message", message);
             return (
-              <p className="text-red-500 my-2 text-sm" key={type}>
+              <p className="text-red-500 mt-2 text-sm text-nowrap" key={type}>
                 {message}
               </p>
             );

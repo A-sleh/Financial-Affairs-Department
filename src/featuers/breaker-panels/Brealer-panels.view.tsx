@@ -4,7 +4,7 @@ import { Search } from "@/components/inputs/Search";
 import { FaPlus } from "react-icons/fa6";
 import BreackerPanelCard from "./components/BreackerPanelCard";
 import AddNewBreakerPanel from "./components/AddNewBreakerPanel";
-import getAllBreakerPannels from "./api/get-breaker-pannels";
+import { getAllBreakerPannels } from "./api/get-breaker-pannels"; 
 import SkeletonBreakerPannel from "@/components/skeleton/Breaker-pannel-container.sk";
 
 export default function BreakerPanels() {

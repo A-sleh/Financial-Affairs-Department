@@ -29,7 +29,10 @@ const TabsAsCheckBox: React.FC<TabsAsCheckBoxProps> = ({
         {values.map((item, Idx) => (
           <button
             key={Idx}
-            onClick={() => !disabled&&setValue(item.value)}
+            onClick={(e) => {
+              e.preventDefault();
+              !disabled && setValue(item.value);
+            }}
             className={`text-sm flex-1 px-2 py-1.5 ${
               item.value == value ? "bg-primary text-white" : "bg-primary/20"
             }  hover:bg-primary hover:text-white rounded-sm transition-all cursor-pointer`}
