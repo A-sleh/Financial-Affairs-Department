@@ -62,7 +62,6 @@ const Input: React.FC<InputProps> = ({
               onChange={(e) => setValue?.(e.target.value)}
               placeholder={placeholder}
               disabled={disabled}
-              required={required}
               style={{
                 cursor: disabled ? "not-allowed" : "",
               }}

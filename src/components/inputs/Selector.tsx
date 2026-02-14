@@ -1,10 +1,12 @@
 import type { ReactNode } from "react";
+import InputeSk from "../skeleton/Inpute.sk";
 
 interface SelectorProps {
   value: any;
   label?: string;
   required?: boolean;
   disabled?: boolean;
+  loadingIntialValue?: boolean;
   setValue: (params: any) => void;
   children: ReactNode;
 }
@@ -15,6 +17,7 @@ const Selector: React.FC<SelectorProps> = ({
   value,
   disabled = false,
   required = false,
+  loadingIntialValue = false,
   children,
 }) => {
   return (
@@ -24,16 +27,20 @@ const Selector: React.FC<SelectorProps> = ({
           {required && <span className="text-red-600">*</span>} {label}
         </label>
       )}
-      <select
-        dir="rtl"
-        value={value}
-        disabled={disabled}
-        required={required}
-        onChange={(e) => setValue(e.target.value)}
-        className="px-3 py-1 bg-primary/20 focus:outline outline-primary-dark rounded-sm shadow-sm"
-      >
-        {children}
-      </select>
+      {loadingIntialValue ? (
+        <InputeSk />
+      ) : (
+        <select
+          dir="rtl"
+          value={value}
+          disabled={disabled}
+          required={required}
+          onChange={(e) => setValue(e.target.value)}
+          className="px-3 py-1 bg-primary/20 focus:outline outline-primary-dark rounded-sm shadow-sm"
+        >
+          {children}
+        </select>
+      )}
     </div>
   );
 };
