@@ -8,6 +8,7 @@ import {
 import { useForm } from "react-hook-form";
 import { SuccessMessageToast, ErrorMessageToast } from "@/utils/dialogs";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRef } from "react";
 
 const OPEN_MODEL_KEY = "new-breaker-panel";
 
@@ -16,6 +17,7 @@ export default function AddNewBreakerPanel({
 }: {
   openingButton: React.ReactNode;
 }) {
+  const closebtnRef = useRef<null | HTMLButtonElement>(null)
   const queryClient = useQueryClient();
   const { mutate: addBreakerPannelToServer, isPending } = addNewBreakerPannel();
   const {
@@ -33,6 +35,7 @@ export default function AddNewBreakerPanel({
       onSuccess: (_: any) => {
         SuccessMessageToast("تم اضافة العلبة بنجاح");
         queryClient.invalidateQueries({ queryKey: ["breaker-pannels-stats"] });
+        closebtnRef.current?.click()
         reset({});
       },
       onError: (_: any) => {
@@ -47,7 +50,7 @@ export default function AddNewBreakerPanel({
       <Model.Window name={OPEN_MODEL_KEY}>
         <header className="flex justify-between items-center mb-4">
           <Model.Close>
-            <button className="hover:text-red-600 transition-all cursor-pointer">
+            <button ref={closebtnRef} className="hover:text-red-600 transition-all cursor-pointer">
               <IoCloseCircleOutline size={25} />
             </button>
           </Model.Close>
