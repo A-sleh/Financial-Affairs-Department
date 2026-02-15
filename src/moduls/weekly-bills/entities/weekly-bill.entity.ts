@@ -6,7 +6,7 @@ export class WeeklyBill {
   weekly_bill_id: number;
 
   @Column('date')
-  data: Date;
+  date: Date;
 
   @Column('float')
   amper_price: number;
