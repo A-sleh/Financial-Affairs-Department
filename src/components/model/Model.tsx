@@ -31,14 +31,14 @@ function Close({ children }: { children: React.ReactNode }) {
   return cloneElement(children, { onClick: () => close() });
 }
 
-function Window({ children, name }: { children: ReactNode; name: string }) {
+function Window({ children, name ,model_width = 'md:min-w-[40vw] md:max-w-[50vw]'}: { children: ReactNode; name: string , model_width?: string }) {
   const { openName } = useContext(ModelContext);
 
   if (name !== openName) return null;
 
   return createPortal(
     <div className="flex justify-center items-center fixed inset-0 bg-[rgba(0,0,0,.4)] z-100">
-      <div className="w-[90vw] md:w-fit p-4 rounded-sm bg-white">
+      <div className={`w-[90vw]  p-4 rounded-sm bg-white ${model_width}`}>
         {children}
       </div>
     </div>,
