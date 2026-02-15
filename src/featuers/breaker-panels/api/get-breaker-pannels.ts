@@ -1,7 +1,7 @@
 import { domain } from "@/api-client/server";
 import { useQuery } from "@tanstack/react-query";
 
-interface IPannelInfo {
+export interface IPannelInfo {
   breaker_pannel_id: number;
   location: string;
   max_breakers: number;

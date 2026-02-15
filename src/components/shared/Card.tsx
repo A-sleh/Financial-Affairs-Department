@@ -1,9 +1,10 @@
 interface ICardProps {
   title: string;
-  value: string | number;
+  value: string | number | undefined;
   icon: React.ReactNode;
   iconColor: string;
   variant: "small" | "medium";
+  loadingValue?: boolean;
 }
 
 export const Card: React.FC<ICardProps> = ({
@@ -12,6 +13,7 @@ export const Card: React.FC<ICardProps> = ({
   value,
   iconColor = "#000",
   variant = "medium",
+  loadingValue = false,
 }) => {
   return (
     <div className={variants.variant[variant].container}>
@@ -25,7 +27,11 @@ export const Card: React.FC<ICardProps> = ({
       )}
       <div className="">
         <h6 className={variants.variant[variant].title}>{title}</h6>
-        <h2 className={variants.variant[variant].value}>{value}</h2>
+        {loadingValue || value == undefined ? (
+          <h2 className="h-6 w-16 my-2 animate-pulse rounded bg-gray-300"></h2>
+        ) : (
+          <h2 className={variants.variant[variant].value}>{value}</h2>
+        )}
       </div>
     </div>
   );
