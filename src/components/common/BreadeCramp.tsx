@@ -8,6 +8,7 @@ const mappingRoutesToArabic: any = {
   statistics: "الإحصائيات",
   setting: "الإعدادات",
   user: "المستخدم",
+  pannel: "اللوحة",
   "weekly-bills": "الفواتير الأسبوعية",
   "new-user-bill": "إدراج فاتورة زبون"
 };

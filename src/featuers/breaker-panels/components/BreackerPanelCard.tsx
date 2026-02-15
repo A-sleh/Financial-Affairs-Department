@@ -53,7 +53,7 @@ export default function BreackerPanelCard({
           variant="small"
         />
       </header>
-      <Link to={"user/" + breaker_pannel_id}>
+      <Link to={"pannel/" + breaker_pannel_id}>
         <button className="w-full px-2 py-1 bg-primary text-white hover:bg-white hover:text-primary transition-all border-t border-primary mt-3 cursor-pointer">
           عرض تفاصيل اللوحة
         </button>

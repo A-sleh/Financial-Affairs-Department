@@ -71,7 +71,7 @@ export const router: RouteObject[] = [
             element: <BreakerPanels />,
           },
           {
-            path: "user/:id", // /breaker-panels/user/:id
+            path: "pannel/:id", // /breaker-panels/pannel/:id
             element: <BreakerPanel />,
           },
         ],
