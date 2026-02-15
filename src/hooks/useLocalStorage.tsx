@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export default function useLocalStorage(key: string) {
-  const [state, setState] = useState(
+export default function useLocalStorage<T>(key: string): [T, (e: any) => void] {
+  const [state, setState] = useState<T>(
     localStorage.getItem(key)
       ? JSON.parse(localStorage.getItem(key) as string)
-      : null
+      : "",
   );
 
   const setStateWithStore = (value: any) => {

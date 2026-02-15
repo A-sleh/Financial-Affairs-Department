@@ -4,12 +4,22 @@ import { Search } from "@/components/inputs/Search";
 import { FaPlus } from "react-icons/fa6";
 import BreackerPanelCard from "./components/BreackerPanelCard";
 import AddNewBreakerPanel from "./components/AddNewBreakerPanel";
-import { getAllBreakerPannels } from "./api/get-breaker-pannels"; 
+import { getAllBreakerPannels } from "./api/get-breaker-pannels";
 import SkeletonBreakerPannel from "@/components/skeleton/Breaker-pannel-container.sk";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function BreakerPanels() {
   const { breakerPannels, isLoading } = getAllBreakerPannels();
-  const [name, setName] = useState("");
+  const [searchKey, setSearchKey] = useLocalStorage<string>('breaker-bannel-search-key');
+
+  const totalBreakerPannelsTitle = (array: any[]) => {
+    if (!array) return "انت غير متصل بالانترنت";
+    return array.length == 0
+      ? "لايوجد لوحات"
+      : array.length > 1
+        ? `يوجد ${breakerPannels?.length} لوحات`
+        : `يوجد ${breakerPannels?.length} لوحة`;
+  };
 
   return (
     <section className="space-y-4">
@@ -17,11 +27,11 @@ export default function BreakerPanels() {
         <Search
           type="secondary"
           placeholder="بحث"
-          value={name}
-          setValue={setName}
+          value={searchKey}
+          setValue={setSearchKey}
         />
         <h3 className="hidden md:block text-2xl self-end before:content-['--'] after:content-['--'] before:text-primary after:text-primary ">
-          يوجد <b>{breakerPannels?.length}</b> لوحات
+          {totalBreakerPannelsTitle(breakerPannels as any)}
         </h3>
         <AddNewBreakerPanel
           openingButton={
@@ -33,14 +43,20 @@ export default function BreakerPanels() {
         />
       </header>
       <div className="flex gap-4 flex-wrap">
-        {isLoading ? (
+        {isLoading || !breakerPannels ? (
           <SkeletonBreakerPannel />
         ) : (
-          breakerPannels?.map((breakerPannel, Idx) => {
-            return (
-              <BreackerPanelCard key={Idx} breakerPannel={breakerPannel} />
-            );
-          })
+          breakerPannels
+            .filter(({ location }) =>
+              location
+                .toLocaleLowerCase()
+                .includes(searchKey.toLocaleLowerCase()),
+            )
+            .map((breakerPannel, Idx) => {
+              return (
+                <BreackerPanelCard key={Idx} breakerPannel={breakerPannel} />
+              );
+            })
         )}
       </div>
     </section>
