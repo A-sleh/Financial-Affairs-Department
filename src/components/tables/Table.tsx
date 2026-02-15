@@ -30,6 +30,7 @@ const Search = () => {
       value={globalFilter}
       setValue={setGlobalFilter}
       type="secondary"
+      style="max-sm:w-full"
     />
   );
 };
@@ -311,8 +312,8 @@ const ReactTable = () => {
  *  ]
  *  `searchKey`: Will contain the search value from global component seaerch
  */
-interface ITableProps {
-  data: any[];
+interface ITableProps<T> {
+  data: T[];
   columns: any[];
   searchKey?: string;
   filterFn?: () => boolean;
@@ -328,7 +329,7 @@ interface IResponse {
   Filter: React.ReactNode;
 }
 
-const Table: React.FC<ITableProps, IResponse> = ({
+const Table: React.FC<ITableProps<T>, IResponse> = ({
   columns,
   data,
   intialTotalRows = 1,

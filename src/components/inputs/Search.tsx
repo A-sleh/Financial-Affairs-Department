@@ -6,6 +6,7 @@ interface SearchProps {
   setValue: (value: string) => void;
   type?: "primary" | "secondary";
   children?: React.ReactNode;
+  style?: string;
 }
 
 export const Search: React.FC<SearchProps> = ({
@@ -13,6 +14,7 @@ export const Search: React.FC<SearchProps> = ({
   value,
   placeholder,
   type = "primary",
+  style = ''
 }) => {
   const inputRef = useRef<null | HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -21,7 +23,7 @@ export const Search: React.FC<SearchProps> = ({
     <label
       className={` ${variants.variant[type].label} ${
         isFocused ? "outline-2 outline-primary-dark" : "outline-none"
-      }`}
+      } ${style}` }
     >
       <IoSearchOutline className={variants.variant[type].icon} />
       <div className={variants.variant[type].divider} />

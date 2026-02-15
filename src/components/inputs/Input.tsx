@@ -32,7 +32,7 @@ const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <div className={className}>
+    <div className={"w-full " + className}>
       <div
         className={`flex flex-col gap-1 text-right relative `}
         style={{
