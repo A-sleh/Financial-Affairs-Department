@@ -11,7 +11,10 @@ import {
 import { UpdateBreakerPannelsUserDto } from './dto/update-breaker-pannels-user.dto';
 import { User } from '../user/entities/user.entity';
 import { DataSource, Repository } from 'typeorm';
-import { BreakerPannelsUser } from './entities/breaker-pannels-user.entity';
+import {
+  BreakerPannelsUser,
+  Subscription_type,
+} from './entities/breaker-pannels-user.entity';
 import { BreakerPannel } from '../breaker-pannel/entities/breaker-pannel.entity';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { subscribe } from 'diagnostics_channel';
@@ -116,13 +119,13 @@ export class BreakerPannelsUsersService {
 
   async getAllPannelsStat(search: string) {
     let breakerPannelsUsers = await this.dataSource
-      .getRepository(BreakerPannelsUser)
-      .createQueryBuilder('breaker-pannels-user')
-      .leftJoinAndSelect('breaker-pannels-user.user', 'user')
+      .getRepository(BreakerPannel)
+      .createQueryBuilder('breaker-pannels')
       .leftJoinAndSelect(
-        'breaker-pannels-user.breaker_pannel',
-        'breaker_pannel',
+        'breaker-pannels.subscribers',
+        'breaker_pannels_user',
       )
+      .leftJoinAndSelect('breaker_pannels_user.user', 'user')
       .where('lower(location) like :search ', {
         search: `%${search?.toLowerCase() || ''}%`,
       })
@@ -132,19 +135,21 @@ export class BreakerPannelsUsersService {
   }
 
   async findOne(id: number) {
-    let breakerPannelUsers = await this.dataSource
-      .getRepository(BreakerPannelsUser)
-      .createQueryBuilder('breaker-pannels-user')
-      .leftJoinAndSelect('breaker-pannels-user.user', 'user')
+    let breakerPannelUsers: BreakerPannel&BreakerPannelsUser = await this.dataSource
+      .getRepository(BreakerPannel)
+      .createQueryBuilder('breaker-pannels')
       .leftJoinAndSelect(
-        'breaker-pannels-user.breaker_pannel',
-        'breaker_pannel',
+        'breaker-pannels.subscribers',
+        'breaker_pannels_user',
       )
+      .leftJoinAndSelect('breaker_pannels_user.user', 'user')
       .where('breaker_pannel_id = :id', { id })
-      .getMany();
-    return {
-      ...this.getBreakerState(breakerPannelUsers)[0],
-      users: breakerPannelUsers.reduce((acc, bpu) => {
+      .getOne() as BreakerPannel&BreakerPannelsUser ;
+
+      return {
+      //@ts-ignore
+      ...this.getBreakerState([breakerPannelUsers])[0],
+      users: breakerPannelUsers.subscribers.reduce((acc, bpu) => {
         acc.push({
           ...bpu.user,
           subscribe_type: bpu.subscribe_type,
@@ -177,9 +182,12 @@ export class BreakerPannelsUsersService {
     if (!breakerPannelUser || !newBreakerid) {
       throw new BadRequestException('Breaker Pannel not found');
     }
-    breakerPannelUser.breaker_pannel = newBreakerid
+    breakerPannelUser.breaker_pannel = newBreakerid;
 
-    return this.breakerPannelsUserRepository.update(breakerPannelUser?.id,breakerPannelUser);
+    return this.breakerPannelsUserRepository.update(
+      breakerPannelUser?.id,
+      breakerPannelUser,
+    );
   }
 
   remove(id: number) {
@@ -191,28 +199,27 @@ export class BreakerPannelsUsersService {
    *  HELPERS
    *
    */
-  getBreakerState(breakerPannelsUsers: BreakerPannelsUser[]) {
+  getBreakerState(breakerPannelsUsers: BreakerPannel[]) {
     let result = new Map<number, PannelStatDto>();
     breakerPannelsUsers.forEach((bpu) => {
-      const bpId = bpu.breaker_pannel.breaker_pannel_id;
-      if (!result.get(bpId)) {
-        result.set(bpId, {
-          breaker_pannel_id: bpu.breaker_pannel.breaker_pannel_id,
-          location: bpu.breaker_pannel.location,
-          total_users: 1,
-          total_ameper: bpu.subscribe_type === 'breaker' ? +bpu?.quantity : 0,
-          total_counter_users: bpu.subscribe_type === 'counter' ? 1 : 0,
-          max_breakers: bpu.breaker_pannel.max_breakers,
-        });
-      } else {
-        const pannelStat: PannelStatDto = result.get(bpId) as PannelStatDto;
-        pannelStat.total_users += 1;
-        pannelStat.total_ameper +=
-          bpu.subscribe_type === 'breaker' ? +bpu?.quantity : 0;
-        pannelStat.total_counter_users +=
-          bpu.subscribe_type === 'counter' ? 1 : 0;
-        result.set(bpId, pannelStat);
-      }
+      const bpId = bpu.breaker_pannel_id;
+      let total_ameper = 0,
+        total_counter_users = 0;
+      bpu.subscribers.forEach((subscriber) => {
+        if (subscriber.subscribe_type == Subscription_type.counter) {
+          total_counter_users++;
+        } else {
+          total_ameper += Number(subscriber.quantity);
+        }
+      });
+      result.set(bpId, {
+        breaker_pannel_id: bpu.breaker_pannel_id,
+        location: bpu.location,
+        total_users: bpu.subscribers.length,
+        max_breakers: bpu.max_breakers,
+        total_ameper,
+        total_counter_users,
+      });
     });
 
     return Array.from(result.values());

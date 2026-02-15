@@ -18,4 +18,10 @@ export class BreakerPannel {
 
   @Column({ type: 'int' })
   max_breakers: number;
+
+  @OneToMany(
+    () => BreakerPannelsUser,
+    (breakerPannelUsers) => breakerPannelUsers.breaker_pannel,
+  )
+  subscribers: BreakerPannelsUser[];
 }
